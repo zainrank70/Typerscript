@@ -447,6 +447,162 @@ const isAdmin = (user: LoginDetails): boolean => {
 - `user1`, `user2` - Objects using enum values (`Roles.ADMIN`, `Roles.USER`)
 - `isAdmin` - Function comparing enum values for type-safe role checking
 
+### Interfaces
+
+Interfaces in TypeScript define the shape/structure of an object. They are similar to type aliases but are specifically designed for object shapes and have unique features.
+
+**What are Interfaces?**
+- Define contracts that objects must follow
+- Specify required properties and their types
+- Can be extended and merged (unlike type aliases)
+- Ideal for defining object structures and class contracts
+
+**Syntax:**
+```typescript
+interface InterfaceName {
+    property1: type1;
+    property2: type2;
+    optionalProperty?: type3; // optional property
+}
+```
+
+**Key Features:**
+
+1. **Interface Merging (Declaration Merging)**
+   - When you declare an interface with the same name multiple times, TypeScript automatically merges them
+   - All properties from both declarations are combined
+   - This is unique to interfaces - type aliases cannot be merged
+   ```typescript
+   interface User {
+       name: string;
+       age: number;
+   }
+   
+   interface User {  // Merged with above
+       youtubeChannel: string;
+   }
+   // Result: User has name, age, and youtubeChannel
+   ```
+
+2. **Interface Extension (using `extends`)**
+   - Interfaces can extend other interfaces using the `extends` keyword
+   - Creates an inheritance relationship - child interface inherits all properties from parent
+   - Different from merging: uses different interface names, creates type hierarchy
+   - Useful for creating specialized interfaces from base interfaces
+   ```typescript
+   // Base interface
+   interface Animal {
+       name: string;
+       age: number;
+       species: string;
+   }
+   
+   // Extended interface - inherits all Animal properties
+   interface Dog extends Animal {
+       breed: string;
+       isTrained: boolean;
+   }
+   
+   // Dog now has: name, age, species (from Animal) + breed, isTrained (its own)
+   ```
+   - Objects implementing extended interfaces must include all properties from both base and extended interfaces
+   - Multiple interfaces can extend the same base interface
+   - Can extend multiple interfaces: `interface C extends A, B { }`
+
+3. **Required Properties**
+   - All properties are required by default (unless marked with `?`)
+   - Objects implementing the interface must include all required properties
+   - TypeScript will error if properties are missing or have wrong types
+
+4. **Extensibility**
+   - Interfaces can extend other interfaces using `extends`
+   - Useful for building complex type hierarchies
+   - More flexible than type aliases for object shapes
+   - Supports multiple inheritance: can extend multiple interfaces
+
+**Interfaces vs Type Aliases:**
+
+| Feature | Interface | Type Alias |
+|---------|-----------|------------|
+| Object shapes | ✅ Ideal | ✅ Works |
+| Merging | ✅ Yes (declaration merging) | ❌ No |
+| Extending | ✅ Yes (`extends`) | ✅ Yes (`&` intersection) |
+| Unions/Intersections | ❌ No | ✅ Yes |
+| Primitives | ❌ No | ✅ Yes |
+| Method signatures | ✅ Yes | ✅ Yes |
+
+**When to Use Interfaces:**
+- **Class contracts** - Defining what classes must implement
+- **Object shapes** - When you need declaration merging
+- **Public APIs** - When you want clear, mergeable contracts
+- **Library definitions** - When multiple declarations might need merging
+
+**When to Use Type Aliases:**
+- **Unions/Intersections** - Complex type combinations
+- **Primitive aliases** - Creating aliases for primitives
+- **Method signatures** - Function type definitions
+- **Computed properties** - When you need mapped types
+
+**Examples from code:**
+
+**Interface Merging:**
+```typescript
+interface User {
+    name: string;
+    age: number;
+    isStudent: boolean;
+}
+
+interface User {  // Auto-merged with above
+    youtubeChannel: string;
+}
+
+const user3: User = {
+    name: "zain",
+    age: 20,
+    isStudent: true,
+    youtubeChannel: "zain"  // Required due to merged interface
+}
+```
+
+**Interface Extension:**
+```typescript
+// Base interface
+interface Animal {
+    name: string;
+    age: number;
+    species: string;
+}
+
+// Extended interface - inherits all Animal properties
+interface Dog extends Animal {
+    breed: string;
+    isTrained: boolean;
+}
+
+// Another extended interface from same base
+interface Cat extends Animal {
+    color: string;
+    isIndoor: boolean;
+}
+
+const myDog: Dog = {
+    name: "Buddy",        // from Animal
+    age: 3,               // from Animal
+    species: "Canine",     // from Animal
+    breed: "Golden Retriever",  // from Dog
+    isTrained: true        // from Dog
+}
+```
+
+**Key Difference: Merging vs Extension**
+- **Merging**: Same interface name declared multiple times → properties combined
+- **Extension**: Different interface names, one extends another → inheritance relationship
+
+**Takeaway:**
+- **Use interface for class contracts** — it's clear, mergeable, and idiomatic
+- **Use type for unions, intersections, or aliasing primitives and for method signatures**
+
 ### Type Inference
 
 TypeScript's compiler can **automatically infer** (figure out) types in many cases:
@@ -498,6 +654,14 @@ Open `index.ts` to see these concepts implemented with practical examples.
 - Try using a typo in enum: `Roles.ADMINN` and see TypeScript catch the error
 - Create a new user with `role: Roles.USER` and test the `isAdmin` function
 - Experiment with enum comparisons: try `user.role === "admin"` vs `user.role === Roles.ADMIN` and see the difference
+- Try creating a `user3` object without `youtubeChannel` and see how interface merging requires all properties
+- Experiment with interface merging: add another `interface User` declaration and see properties merge
+- Try creating an object with wrong types for interface properties and see TypeScript catch errors
+- Compare interface vs type alias: try to merge a type alias (it won't work) vs merging an interface
+- Try creating a `myDog` object without properties from `Animal` and see the type error
+- Experiment with interface extension: create a new interface extending `Animal` with different properties
+- Try creating a `Dog` object missing inherited properties from `Animal` and see TypeScript catch it
+- Compare merging vs extension: see how merging uses same name while extension uses different names
 
 ## TypeScript Configuration
 

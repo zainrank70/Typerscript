@@ -103,6 +103,7 @@ const calculateTotal = (product) => {
 console.log(calculateTotal(product));
 console.log(product.displaycountry("Pakistan"));
 // Enum use when a property can have only one value at a time, selected from a predefined list of values and to restrict values, avoid magic strings, improve readability, and prevent invalid assignments.
+//************************************enums************************************ */
 var Roles;
 (function (Roles) {
     Roles["ADMIN"] = "admin";
@@ -123,4 +124,13 @@ const isAdmin = (user) => {
 };
 console.log(isAdmin(user1));
 console.log(isAdmin(user2));
+// Creating an object that implements the User interface
+// The object must have all required properties with correct types
+// TypeScript will error if any property is missing or has wrong type
+const user3 = {
+    name: "zain",
+    age: 20,
+    isStudent: true
+};
+console.log(user3);
 //# sourceMappingURL=index.js.map

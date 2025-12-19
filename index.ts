@@ -177,3 +177,78 @@ const isAdmin = (user: LoginDetails): boolean => {
 
 console.log(isAdmin(user1));
 console.log(isAdmin(user2));
+
+
+//************************************interfaces************************************ */
+// Interfaces in TypeScript define the shape/structure of an object
+// Similar to type aliases, but interfaces are specifically designed for object shapes
+// Interfaces can be extended and merged, making them more flexible for complex scenarios
+// Use interfaces when defining object contracts that classes or objects must follow
+
+interface User {
+    name: string;        // required property: must be a string
+    age: number;         // required property: must be a number
+    isStudent: boolean;  // required property: must be a boolean
+}
+
+//below is auto merged with the above interface
+interface User{
+    youtubeChannel: string;
+}
+// Creating an object that implements the User interface
+// The object must have all required properties with correct types
+// TypeScript will error if any property is missing or has wrong type
+const user3: User = {
+    name: "zain",
+    age: 20,
+    isStudent: true,
+    youtubeChannel: "zain"
+}
+console.log(user3);
+
+// Interface Extension using 'extends' - different from merging
+// 'extends' creates an inheritance relationship where one interface inherits all properties from another
+// This is useful for creating specialized interfaces from base interfaces
+
+// Base interface - defines common properties
+interface Animal {
+    name: string;
+    age: number;
+    species: string;
+}
+
+// Extended interface - inherits all properties from Animal and adds new ones
+interface Dog extends Animal {
+    breed: string;
+    isTrained: boolean;
+}
+
+// Another extended interface - same base, different additional properties
+interface Cat extends Animal {
+    color: string;
+    isIndoor: boolean;
+}
+
+// Objects implementing extended interfaces must have all properties from both base and extended
+const myDog: Dog = {
+    name: "Buddy",
+    age: 3,
+    species: "Canine",
+    breed: "Golden Retriever",
+    isTrained: true
+}
+
+const myCat: Cat = {
+    name: "Whiskers",
+    age: 2,
+    species: "Feline",
+    color: "Orange",
+    isIndoor: true
+}
+
+console.log(myDog);
+console.log(myCat);
+
+// Takeaway:
+// Use interface for class contracts — it's clear, mergeable, and idiomatic.
+// Use type for unions, intersections, or aliasing primitives and for method signatures
