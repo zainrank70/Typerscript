@@ -252,3 +252,34 @@ console.log(myCat);
 // Takeaway:
 // Use interface for class contracts — it's clear, mergeable, and idiomatic.
 // Use type for unions, intersections, or aliasing primitives and for method signatures
+
+//************************************Primitives datatypes**************************** */
+// Primitives in TypeScript (and JavaScript) are immutable
+// This means you cannot modify them directly - you must create a new value
+
+// Example: Trying to modify a string in place
+let b: string = "Hello";
+// b[0] = "h";  // ❌ This doesn't work - strings are immutable
+// In JavaScript/TypeScript, trying to modify a string like this silently fails
+// The string remains unchanged because primitives are immutable
+
+console.log(b); // "Hello" ✅ unchanged
+
+// How to "change" a string
+// Since you cannot modify a string in place, you need to create a new string:
+
+// Method 1: Using slice() - slice from index 1 to end
+b = "h" + b.slice(1);
+console.log(b); // "hello" ✅ new string created
+
+// Method 2: Using substring() with template literals
+b = `H${b.substring(1)}`;
+console.log(b); // "Hello" ✅ new string created
+
+// Method 3: Using replace() method
+b = b.replace("H", "h");
+console.log(b); // "hello" ✅ new string created
+
+// Key takeaway:
+// Primitives are immutable, so you cannot modify them directly.
+// To "change" them, you always create a new value and assign it back.

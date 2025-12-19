@@ -102,6 +102,51 @@ TypeScript supports several primitive types:
    - Used when you need integers larger than `Number.MAX_SAFE_INTEGER`
    - Cannot be mixed with regular `number` types in operations
 
+### Primitive Immutability
+
+**All primitives in TypeScript (and JavaScript) are immutable** - this is a fundamental concept that affects how you work with them.
+
+**What does "immutable" mean?**
+- You **cannot modify** a primitive value directly
+- Once created, the value cannot be changed
+- Any "modification" actually creates a **new value**
+
+**Example: Strings are Immutable**
+```typescript
+let b: string = "Hello";
+// b[0] = "h";  // ❌ This doesn't work - strings are immutable
+// The string remains unchanged because primitives are immutable
+console.log(b); // "Hello" ✅ unchanged
+```
+
+**How to "Change" a Primitive:**
+Since you cannot modify primitives in place, you must create a new value:
+
+1. **Using `slice()` method:**
+   ```typescript
+   b = "h" + b.slice(1);  // Creates new string
+   ```
+
+2. **Using `substring()` with template literals:**
+   ```typescript
+   b = `H${b.substring(1)}`;  // Creates new string
+   ```
+
+3. **Using `replace()` method:**
+   ```typescript
+   b = b.replace("H", "h");  // Creates new string
+   ```
+
+**Key Takeaway:**
+- **Primitives are immutable** - you cannot modify them directly
+- To "change" them, you **always create a new value** and assign it back
+- This applies to all primitives: `string`, `number`, `boolean`, `bigint`, `null`, `undefined`, `symbol`
+
+**Why This Matters:**
+- Understanding immutability helps prevent bugs
+- Explains why string methods return new strings instead of modifying the original
+- Important for understanding how variables work with primitives vs objects
+
 ### Special Types: `any` vs `unknown`
 
 TypeScript provides two special types for handling dynamic or unknown values:
@@ -662,6 +707,10 @@ Open `index.ts` to see these concepts implemented with practical examples.
 - Experiment with interface extension: create a new interface extending `Animal` with different properties
 - Try creating a `Dog` object missing inherited properties from `Animal` and see TypeScript catch it
 - Compare merging vs extension: see how merging uses same name while extension uses different names
+- Try to modify a string in place: `let str = "Hello"; str[0] = "h";` and see it doesn't work
+- Experiment with string methods: try `slice()`, `substring()`, and `replace()` to create new strings
+- Compare primitive immutability: try modifying a number vs modifying an array to see the difference
+- Create a new string using different methods and observe that the original remains unchanged
 
 ## TypeScript Configuration
 
