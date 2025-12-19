@@ -52,12 +52,12 @@ node index.js
 
 ## Example Code
 
-The `index.ts` file contains a simple example:
+The `index.ts` file contains a simple example using an arrow function:
 
 ```typescript
-function Sum(a: number, b: number): number {
+const Sum = (a: number, b: number): number => {
     return a + b;
-}
+};
 console.log(Sum(5, 10));
 ```
 
