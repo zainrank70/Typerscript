@@ -123,6 +123,8 @@ type Product = {
         size: string;
         quantity: number;
     };
+    displaycountry: (country: string) => string; //method call signature for the function 
+    
 }
 const product: Product = {
     name: "shirt",
@@ -132,7 +134,8 @@ const product: Product = {
         color: "red",
         size: "10",
         quantity: 10
-    }
+    },
+    displaycountry: (country: string) => country
 }
 
 const calculateTotal = (product: Product): number => {
@@ -140,5 +143,37 @@ const calculateTotal = (product: Product): number => {
 }
 console.log(calculateTotal(product));
 
+console.log(product.displaycountry("Pakistan"));
 
+// Enum use when a property can have only one value at a time, selected from a predefined list of values and to restrict values, avoid magic strings, improve readability, and prevent invalid assignments.
 
+//************************************enums************************************ */
+enum Roles{
+    ADMIN = "admin",
+    USER = "user"
+}
+
+type LoginDetails = {
+    username: string;
+    password: string;
+    role: Roles;
+}
+
+const user1: LoginDetails = {
+    username: "zain",
+    password: "123456",
+    role: Roles.ADMIN
+}
+
+const user2: LoginDetails = {
+    username: "ali",
+    password: "123456",
+    role: Roles.USER
+}
+
+const isAdmin = (user: LoginDetails): boolean => {
+    return user.role === Roles.ADMIN;
+}
+
+console.log(isAdmin(user1));
+console.log(isAdmin(user2));

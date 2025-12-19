@@ -94,10 +94,33 @@ const product = {
         color: "red",
         size: "10",
         quantity: 10
-    }
+    },
+    displaycountry: (country) => country
 };
 const calculateTotal = (product) => {
     return product.price * product.details.quantity;
 };
 console.log(calculateTotal(product));
+console.log(product.displaycountry("Pakistan"));
+// Enum use when a property can have only one value at a time, selected from a predefined list of values and to restrict values, avoid magic strings, improve readability, and prevent invalid assignments.
+var Roles;
+(function (Roles) {
+    Roles["ADMIN"] = "admin";
+    Roles["USER"] = "user";
+})(Roles || (Roles = {}));
+const user1 = {
+    username: "zain",
+    password: "123456",
+    role: Roles.ADMIN
+};
+const user2 = {
+    username: "ali",
+    password: "123456",
+    role: Roles.USER
+};
+const isAdmin = (user) => {
+    return user.role === Roles.ADMIN;
+};
+console.log(isAdmin(user1));
+console.log(isAdmin(user2));
 //# sourceMappingURL=index.js.map

@@ -325,6 +325,7 @@ type TypeName = {
     nested: {
         nestedProperty: type4;
     };
+    methodName: (param: type) => returnType; // method signature
 }
 ```
 
@@ -346,14 +347,23 @@ type Product = {
         size: string;
         quantity: number;
     };
+    displaycountry: (country: string) => string; // method signature
 }
 ```
+
+**Method Signatures in Type Aliases:**
+- Type aliases can include methods (functions) as properties
+- Syntax: `methodName: (param1: type1, param2: type2) => returnType`
+- Defines the **signature** (structure) of the function, not the implementation
+- The actual function is provided when creating the object
+- Example: `displaycountry: (country: string) => string` means the method takes a string and returns a string
 
 **Benefits:**
 - Can be used as function parameters: `function calculateTotal(product: Product)`
 - Can be reused across multiple variables
 - Better IDE autocomplete and IntelliSense
 - Self-documenting code
+- Can include methods that objects must implement
 
 **Optional Properties:**
 - Marked with `?` after the property name
@@ -367,8 +377,75 @@ type Product = {
 
 **Examples from code:**
 - `person` - Object with inline type annotation and nested `address` object
-- `Product` - Type alias with optional `description` and nested `details` object
+- `Product` - Type alias with optional `description`, nested `details` object, and `displaycountry` method signature
+- `product.displaycountry("Pakistan")` - Calling the method defined in the type alias
 - `calculateTotal` - Function using `Product` type alias as parameter
+
+### Enums
+
+Enums (enumerations) are a way to define a set of named constants. They're useful when a property can have only one value at a time, selected from a predefined list.
+
+**Why use Enums?**
+- **Restrict values**: Only allow specific predefined values
+- **Avoid magic strings**: Use meaningful names instead of raw strings
+- **Improve readability**: Code is self-documenting
+- **Prevent invalid assignments**: TypeScript catches typos and invalid values
+- **Better autocomplete**: IDE suggests available enum values
+
+**Syntax:**
+```typescript
+enum EnumName {
+    KEY1 = "value1",
+    KEY2 = "value2"
+}
+```
+
+**String Enums** (Most Common):
+```typescript
+enum Roles {
+    ADMIN = "admin",
+    USER = "user"
+}
+```
+- Each enum member has an explicit string value
+- More readable and debuggable
+- Values are strings: `Roles.ADMIN` equals `"admin"`
+
+**Using Enums in Type Aliases:**
+```typescript
+type LoginDetails = {
+    username: string;
+    password: string;
+    role: Roles; // enum type
+}
+```
+
+**Accessing Enum Values:**
+- Use dot notation: `Roles.ADMIN`, `Roles.USER`
+- TypeScript ensures only valid enum values can be assigned
+- Provides autocomplete for available options
+
+**Comparing Enum Values:**
+```typescript
+const isAdmin = (user: LoginDetails): boolean => {
+    return user.role === Roles.ADMIN;
+}
+```
+- Compare using `===` operator
+- Type-safe: TypeScript knows the valid values
+- Prevents typos: `Roles.ADMINN` would cause a compile error
+
+**Key Points:**
+- Enums create a new type that can be used like any other type
+- Enum values are constants - they can't be changed at runtime
+- Use enums when you have a fixed set of related constants
+- String enums are preferred over numeric enums for better debugging
+
+**Examples from code:**
+- `Roles` - Enum with `ADMIN` and `USER` values
+- `LoginDetails` - Type alias using `Roles` enum for the `role` property
+- `user1`, `user2` - Objects using enum values (`Roles.ADMIN`, `Roles.USER`)
+- `isAdmin` - Function comparing enum values for type-safe role checking
 
 ### Type Inference
 
@@ -415,6 +492,12 @@ Open `index.ts` to see these concepts implemented with practical examples.
 - Try using `Product` type alias for multiple variables and see code reusability
 - Experiment with optional properties: create a `Product` without `description` and see it's allowed
 - Try calling `calculateTotal()` with wrong object structure and observe type safety
+- Try implementing `displaycountry` method with wrong signature and see the type error
+- Experiment with method signatures: change the parameter or return type and see TypeScript catch errors
+- Try assigning an invalid role to `user1`: `user1.role = "invalid"` and see the type error
+- Try using a typo in enum: `Roles.ADMINN` and see TypeScript catch the error
+- Create a new user with `role: Roles.USER` and test the `isAdmin` function
+- Experiment with enum comparisons: try `user.role === "admin"` vs `user.role === Roles.ADMIN` and see the difference
 
 ## TypeScript Configuration
 
