@@ -130,7 +130,28 @@ console.log(isAdmin(user2));
 const user3 = {
     name: "zain",
     age: 20,
-    isStudent: true
+    isStudent: true,
+    youtubeChannel: "zain"
 };
 console.log(user3);
+// Objects implementing extended interfaces must have all properties from both base and extended
+const myDog = {
+    name: "Buddy",
+    age: 3,
+    species: "Canine",
+    breed: "Golden Retriever",
+    isTrained: true
+};
+const myCat = {
+    name: "Whiskers",
+    age: 2,
+    species: "Feline",
+    color: "Orange",
+    isIndoor: true
+};
+console.log(myDog);
+console.log(myCat);
+// Takeaway:
+// Use interface for class contracts — it's clear, mergeable, and idiomatic.
+// Use type for unions, intersections, or aliasing primitives and for method signatures
 //# sourceMappingURL=index.js.map
