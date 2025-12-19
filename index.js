@@ -74,4 +74,30 @@ for (const index in fruits) {
 // using array.map method in typescript
 const numbers3 = numbers.map((number) => number * 2);
 console.log(numbers3);
+// object in typescript
+const person = {
+    name: "zain",
+    age: 20,
+    adress: {
+        street: "123 main st",
+        city: "karachi",
+        state: "karachi",
+        zip: "12345"
+    }
+};
+console.log(person);
+const product = {
+    name: "shirt",
+    price: 20,
+    description: "this is a product",
+    details: {
+        color: "red",
+        size: "10",
+        quantity: 10
+    }
+};
+const calculateTotal = (product) => {
+    return product.price * product.details.quantity;
+};
+console.log(calculateTotal(product));
 //# sourceMappingURL=index.js.map

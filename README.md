@@ -281,6 +281,95 @@ const numbers3: number[] = numbers.map((number) => number * 2);
 **Example from code:**
 - `numbers3` - Created by mapping `numbers` and doubling each value
 
+### Objects in TypeScript
+
+Objects in TypeScript can be typed in two ways: inline type annotations or using type aliases.
+
+**1. Inline Type Annotations** (Direct typing)
+```typescript
+const person: { name: string, age: number, address: { street: string, city: string } } = {
+    name: "zain",
+    age: 20,
+    address: {
+        street: "123 main st",
+        city: "karachi"
+    }
+};
+```
+- Type is defined directly in the variable declaration
+- Useful for one-off objects
+- Can become verbose for complex objects
+- **Note**: Uses commas to separate properties in the type definition
+
+**2. Nested Objects**
+- Objects can contain other objects as properties
+- Each nested object needs its own type definition
+- TypeScript ensures type safety at all levels
+
+**Key Points:**
+- All properties must match the type definition
+- Missing required properties cause type errors
+- Extra properties (not in type) cause type errors
+- Type safety applies to nested objects as well
+
+### Type Aliases
+
+Type aliases allow you to create reusable type definitions with a custom name.
+
+**Syntax:**
+```typescript
+type TypeName = {
+    property1: type1;
+    property2: type2;
+    optionalProperty?: type3; // optional property
+    nested: {
+        nestedProperty: type4;
+    };
+}
+```
+
+**Key Features:**
+- **Reusability**: Define once, use multiple times
+- **Readability**: Makes code cleaner and easier to understand
+- **Maintainability**: Change the type in one place, updates everywhere
+- **Semicolons**: Use semicolons (`;`) to separate properties (not commas)
+- **Optional Properties**: Use `?` to make properties optional
+
+**Example from code:**
+```typescript
+type Product = {
+    name: string;
+    price: number;
+    description?: string; // optional property
+    details: {
+        color: string;
+        size: string;
+        quantity: number;
+    };
+}
+```
+
+**Benefits:**
+- Can be used as function parameters: `function calculateTotal(product: Product)`
+- Can be reused across multiple variables
+- Better IDE autocomplete and IntelliSense
+- Self-documenting code
+
+**Optional Properties:**
+- Marked with `?` after the property name
+- Can be `undefined` if not provided
+- Similar to optional function parameters
+- Example: `description?: string` means `description` may or may not exist
+
+**Differences: Inline vs Type Alias**
+- **Inline**: `{ name: string, age: number }` - commas, one-time use
+- **Type Alias**: `type Person = { name: string; age: number; }` - semicolons, reusable
+
+**Examples from code:**
+- `person` - Object with inline type annotation and nested `address` object
+- `Product` - Type alias with optional `description` and nested `details` object
+- `calculateTotal` - Function using `Product` type alias as parameter
+
 ### Type Inference
 
 TypeScript's compiler can **automatically infer** (figure out) types in many cases:
@@ -320,6 +409,12 @@ Open `index.ts` to see these concepts implemented with practical examples.
 - Experiment with `map()`: try `numbers.map((n) => n * 2)` and see how TypeScript infers the return type
 - Try using wrong types in `map()`: `fruits.map((f) => f * 2)` to see the type error
 - Experiment with other array methods like `filter()`, `find()`, `reduce()` and observe type safety
+- Try accessing a non-existent property on `person` object and see the type error
+- Try adding a wrong type to `person.address` and see nested type checking in action
+- Create a new `Product` with missing required properties and see the type error
+- Try using `Product` type alias for multiple variables and see code reusability
+- Experiment with optional properties: create a `Product` without `description` and see it's allowed
+- Try calling `calculateTotal()` with wrong object structure and observe type safety
 
 ## TypeScript Configuration
 
